@@ -1,0 +1,23 @@
+name: Update README on Remote Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Copy README to remote server
+        uses: appleboy/scp-action@master
+        with:
+          host: <HOST>
+          username: <USERNAME>
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: README.md
+          target: <REMOTE_PATH>/README.md
